@@ -1,0 +1,17 @@
+version: '3.5'
+
+services:
+  ometiff_processor:
+    build:
+      context: .
+      target: prod
+      dockerfile: ometiff_processor/Dockerfile
+    container_name: ometiff-processor
+    image: blackfynn/ometiff-processor:${IMAGE_TAG}
+  czi_processor:
+    build:
+      context: .
+      target: prod
+      dockerfile: czi_processor/Dockerfile
+    container_name: czi-processor
+    image: blackfynn/czi-processor:${IMAGE_TAG}

@@ -1,0 +1,33 @@
+version: '3.5'
+
+services:
+  ometiff_processor:
+    build:
+      context: .
+      dockerfile: ometiff_processor/Dockerfile
+    container_name: ometiff-processor
+    command: ["python", "-m", "pytest", "-s", "-x", "--cov-report", "html:/docker_scratch/htmlreport", "--cov=ometiff_processor", "tests/"]
+    env_file:
+      - ometiff_processor/test.env
+    image: blackfynn/ometiff-processor:${IMAGE_TAG}
+    volumes:
+      - ./data/ometiff:/docker_scratch/
+      - ./ometiff_processor/tests/resources:/test-resources/
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+  czi_processor:
+    build:
+      context: .
+      dockerfile: czi_processor/Dockerfile
+    container_name: czi-processor
+    command: ["python", "-m", "pytest", "-s", "-x", "--cov-report", "html:/docker_scratch/htmlreport", "--cov=czi_processor", "tests/"]
+    env_file:
+      - czi_processor/test.env
+    image: blackfynn/czi-processor:${IMAGE_TAG}
+    volumes:
+      - ./data/ometiff:/docker_scratch/
+      - ./czi_processor/tests/resources:/test-resources/
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
