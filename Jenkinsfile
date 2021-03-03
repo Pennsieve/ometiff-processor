@@ -5,7 +5,7 @@ node('executor') {
 
   def authorName  = sh(returnStdout: true, script: 'git --no-pager show --format="%an" --no-patch')
   def allProcessors = sh(returnStdout: true, script: 'cat docker-compose*yml | grep "_processor:" | sed \'s/\\://g\' | sed \'s/_/-/g\' | sort | uniq | xargs').split()
-  def isMaster    = env.BRANCH_NAME == "master"
+  def isMaster    = env.BRANCH_NAME == "main"
   def isDev       = env.BRANCH_NAME == "dev"
   def serviceName = env.JOB_NAME.tokenize("/")[1]
 
@@ -39,7 +39,7 @@ node('executor') {
 
       stage("Deploy") {
         allProcessors.each { proc ->
-          build job: "service-deploy/blackfynn-non-prod/us-east-1/dev-vpc-use1/dev/${proc}",
+          build job: "service-deploy/pennsieve-non-prod/us-east-1/dev-vpc-use1/dev/${proc}",
           parameters: [
             string(name: 'IMAGE_TAG', value: imageTag),
             string(name: 'TERRAFORM_ACTION', value: 'apply')
