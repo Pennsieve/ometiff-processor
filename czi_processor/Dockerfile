@@ -1,7 +1,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # TEST IMAGE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FROM blackfynn/base-processor-pandas-test:91-bb86163 as test
+FROM pennsieve/base-processor-pandas-test:6-43b7408 as test
 
 RUN cd /usr/bin && apk add --no-cache --update openjdk8 python2-dev gcc musl-dev libffi-dev jpeg-dev tiff-dev zlib-dev bash git openssh && \
     for i in $(find /usr/bin/../lib/jvm/default-jvm/bin -mindepth 1); do ln -s $i $(basename $i); done || true
@@ -84,7 +84,7 @@ ENTRYPOINT [""]
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # PRODUCTION IMAGE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FROM blackfynn/base-processor-pandas:91-bb86163 as prod
+FROM pennsieve/base-processor-pandas:6-43b7408 as prod
 
 RUN cd /usr/bin && apk add --no-cache --update openjdk8 python2-dev gcc musl-dev libffi-dev jpeg-dev tiff-dev zlib-dev bash git openssh openssl-dev && \
     for i in $(find /usr/bin/../lib/jvm/default-jvm/bin -mindepth 1); do ln -s $i $(basename $i); done || true
